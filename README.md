@@ -7,7 +7,7 @@ This library is an npm library that converts images from native to pixel images.
 The solution is implemented in JavaScript and does not require a default module link.
 
 ## Usage
-This library is currently available when you run it from expo web to web. The code below is an example code.
+In addition to developing expo with Android and iOS, this library also requires additional platform settings to run expo on the web.
 
 ``` javascript
 import React from 'react';
