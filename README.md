@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
 ## You try this library
 
 If you want to test it in this repository
+
     git clone https://github.com/Boundary-org/react-native-boundary-imagepixel.git
     cd imagepixel-test
     npm install
