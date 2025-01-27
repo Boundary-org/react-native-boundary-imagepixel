@@ -1,4 +1,4 @@
-## react-native-boundary-imagepixel
+## [react-native-boundary-imagepixel]([text](https://www.npmjs.com/package/react-native-boundary-imagepixel))
 This library is an npm library that converts images from native to pixel images.
 
 ## Installation
@@ -7,22 +7,42 @@ This library is an npm library that converts images from native to pixel images.
 The solution is implemented in JavaScript and does not require a default module link.
 
 ## Usage
-```
-import React from "react";
-import { View } from "react-native";
-import imagepixel from "react-native-boundary-imagepixel"; 
+This library is currently available when you run it from expo web to web. The code below is an example code.
 
-const App = () => {
+```
+import React from 'react';
+import { View, StyleSheet, Platform } from 'react-native';
+import DotImageRenderer from 'react-native-boundary-imagepixel';
+
+export default function App() {
+  const imageSource = require('./assets/test.png');
+  
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <imagepixel 
-        imageUri="./assets/test.png" 
-        blockSize={20} 
+    <View style={styles.container}>
+      <DotImageRenderer
+        imageUri={Platform.OS === 'web' ? imageSource.uri : imageSource}
+        blockSize={20}
       />
     </View>
   );
-};
+}
 
-export default App;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
 ```
+## You try this library
 
+If you want to test it in this repository
+    git clone https://github.com/Boundary-org/react-native-boundary-imagepixel.git
+    cd imagepixel-test
+    npm install
+    npx expo start
+
+## [LICENSE]([https://github.com/Boundary-org/react-native-boundary-imagepixel/blob/main/LICENSE)
+MIT © siniseong, Inc. 

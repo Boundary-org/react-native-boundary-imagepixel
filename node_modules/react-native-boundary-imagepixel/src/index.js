@@ -1,53 +1,65 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet } from "react-native";
-import { Skia, Canvas, useCanvasRef, Paint } from "@shopify/react-native-skia";
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Image } from 'react-native';
 
 const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
-  const canvasRef = useCanvasRef();
   const [image, setImage] = useState(null);
 
   useEffect(() => {
     if (imageUri) {
-      const loadedImage = Skia.Image.MakeFromEncoded(require(imageUri));
-      if (loadedImage) {
-        setImage(loadedImage);
-      } else {
-        console.error("Failed to load image.");
-      }
+      const img = new Image();
+      img.src = imageUri;
+      img.onload = () => setImage(img);
+      img.onerror = (err) => console.error('Image loading failed:', err);
     }
   }, [imageUri]);
 
-  useEffect(() => {
-    if (canvasRef.current && image) {
-      const canvas = canvasRef.current.getContext();
-      const { width, height } = image;
+  const renderDots = (ctx, img, blockSize) => {
+    const width = img.width;
+    const height = img.height;
 
-      const pixels = image.readPixels();
-      if (pixels) {
-        for (let y = 0; y < height; y += blockSize) {
-          for (let x = 0; x < width; x += blockSize) {
-            const pixelIndex = (y * width + x) * 4;
-            const r = pixels[pixelIndex];
-            const g = pixels[pixelIndex + 1];
-            const b = pixels[pixelIndex + 2];
-            const a = pixels[pixelIndex + 3] / 255;
+    ctx.clearRect(0, 0, width, height);
+    for (let y = 0; y < height; y += blockSize) {
+      for (let x = 0; x < width; x += blockSize) {
+        const pixel = ctx.getImageData(x, y, 1, 1).data;
+        const r = pixel[0];
+        const g = pixel[1];
+        const b = pixel[2];
+        const a = pixel[3] / 255;
 
-            const paint = new Paint();
-            paint.setColor(Skia.Color(r, g, b, a));
-            canvas.drawRect(
-              Skia.Rect.MakeXYWH(x, y, blockSize, blockSize),
-              paint
-            );
-          }
-        }
+        ctx.fillStyle = `rgba(${r},${g},${b},${a})`;
+        ctx.fillRect(x, y, blockSize, blockSize);
       }
     }
-  }, [canvasRef, image, blockSize]);
+  };
 
-  return <Canvas ref={canvasRef} style={styles.canvas} />;
+  return (
+    <View style={styles.container}>
+      {image && (
+        <canvas
+          ref={(canvas) => {
+            if (canvas && image) {
+              const ctx = canvas.getContext('2d');
+              canvas.width = image.width;
+              canvas.height = image.height;
+
+              ctx.drawImage(image, 0, 0);
+              renderDots(ctx, image, blockSize);
+            }
+          }}
+          style={styles.canvas}
+        />
+      )}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
   canvas: {
     width: 300,
     height: 300,

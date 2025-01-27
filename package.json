@@ -1,6 +1,6 @@
 {
   "name": "react-native-boundary-imagepixel",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,6 +22,6 @@
     "@shopify/react-native-skia": "^1.10.2",
     "react": "^18.3.1",
     "react-native": "^0.77.0",
-    "react-native-boundary-imagepixel": "^1.0.1"
+    "react-native-boundary-imagepixel": "^1.0.2"
   }
 }
