@@ -1,11 +1,3 @@
-import React, { useEffect, useState, useRef } from "react";
-import { StyleSheet, View, Platform } from "react-native";
-
-let Skia, SkiaCanvas, useCanvasRef, Paint;
-if (Platform.OS !== "web") {
-  ({ Skia, Canvas: SkiaCanvas, useCanvasRef, Paint } = require("@shopify/react-native-skia"));
-}
-
 const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
   const [image, setImage] = useState(null);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
@@ -32,10 +24,10 @@ const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
           context.drawImage(img, 0, 0);
 
           for (let y = 0; y < img.height; y += blockSize) {
-            for (let x = 0; x < img.width; x += blockSize) {
+            for (let x = 0; x < img.width; x += blockSize * 0.9) {  
               const pixel = context.getImageData(x, y, 1, 1).data;
               context.fillStyle = `rgba(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, ${pixel[3] / 255})`;
-              context.fillRect(x, y, blockSize, blockSize);
+              context.fillRect(x, y, blockSize * 0.9, blockSize);  
             }
           }
         };
@@ -81,7 +73,7 @@ const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
       if (pixels) {
         canvas.clear();  
         for (let y = 0; y < height; y += blockSize) {
-          for (let x = 0; x < width; x += blockSize) {
+          for (let x = 0; x < width; x += blockSize * 0.9) {  
             const pixelIndex = (y * width + x) * 4;
             const r = pixels[pixelIndex];
             const g = pixels[pixelIndex + 1];
@@ -91,7 +83,7 @@ const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
             const paint = new Paint();
             paint.setColor(Skia.Color(r, g, b, a));
             canvas.drawRect(
-              Skia.Rect.MakeXYWH(x, y, blockSize, blockSize),
+              Skia.Rect.MakeXYWH(x, y, blockSize * 0.9, blockSize), 
               paint
             );
           }
@@ -107,17 +99,3 @@ const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  canvas: {
-    width: "100%",
-    height: "100%",
-  },
-});
-
-export default DotImageRenderer;
