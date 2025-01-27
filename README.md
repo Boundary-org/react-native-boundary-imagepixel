@@ -20,7 +20,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <DotImageRenderer
-        // Use 'uri' for expo web and local image path as 'require' for native environment.
+        // Use 'uri' for expo web and local image path as 'require' for native environment. 
         imageUri={Platform.OS === 'web' ? imageSource.uri : imageSource}
         blockSize={10}
       />
