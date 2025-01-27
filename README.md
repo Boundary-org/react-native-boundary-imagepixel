@@ -45,5 +45,12 @@ If you want to test it in this repository
     npm install
     npx expo start
 
+## Test Image
+
+| Before Using Library | After Using Library |
+|:--------------------:|:-------------------:|
+| ![Before Using Library](https://github.com/user-attachments/assets/45088720-24d8-4ae0-931e-66cfcf60c86d =300x300) | ![After Using Library](https://github.com/user-attachments/assets/dd096c19-c684-4f4c-9f67-312a903cf331 =300x300) |
+
+
 ## [LICENSE]([https://github.com/Boundary-org/react-native-boundary-imagepixel/blob/main/LICENSE)
 MIT © siniseong, Inc. 
