@@ -1,26 +1,50 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
-import { Skia, Canvas, useCanvasRef } from "@shopify/react-native-skia";
+import { Skia, Canvas, useCanvasRef, Paint } from "@shopify/react-native-skia";
 
-const extractPixels = (imageUri, callback) => {
+const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
   const canvasRef = useCanvasRef();
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
-    if (canvasRef.current && imageUri) {
-      const image = Skia.Image.MakeFromEncoded(require(imageUri));
-      if (image) {
-        const pixels = image.readPixels(); 
-        callback(pixels);
+    if (imageUri) {
+      const loadedImage = Skia.Image.MakeFromEncoded(require(imageUri));
+      if (loadedImage) {
+        setImage(loadedImage);
       } else {
         console.error("Failed to load image.");
       }
     }
-  }, [canvasRef, imageUri]);
+  }, [imageUri]);
 
-  return (
-    <Canvas ref={canvasRef} style={styles.canvas}>
-    </Canvas>
-  );
+  useEffect(() => {
+    if (canvasRef.current && image) {
+      const canvas = canvasRef.current.getContext();
+      const { width, height } = image;
+
+      const pixels = image.readPixels();
+      if (pixels) {
+        for (let y = 0; y < height; y += blockSize) {
+          for (let x = 0; x < width; x += blockSize) {
+            const pixelIndex = (y * width + x) * 4;
+            const r = pixels[pixelIndex];
+            const g = pixels[pixelIndex + 1];
+            const b = pixels[pixelIndex + 2];
+            const a = pixels[pixelIndex + 3] / 255;
+
+            const paint = new Paint();
+            paint.setColor(Skia.Color(r, g, b, a));
+            canvas.drawRect(
+              Skia.Rect.MakeXYWH(x, y, blockSize, blockSize),
+              paint
+            );
+          }
+        }
+      }
+    }
+  }, [canvasRef, image, blockSize]);
+
+  return <Canvas ref={canvasRef} style={styles.canvas} />;
 };
 
 const styles = StyleSheet.create({
@@ -30,4 +54,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default extractPixels;
+export default DotImageRenderer;
