@@ -23,11 +23,13 @@ const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
 
           context.drawImage(img, 0, 0);
 
+          const adjustedBlockSize = Math.floor(img.width / Math.ceil(img.width / blockSize));
+
           for (let y = 0; y < img.height; y += blockSize) {
-            for (let x = 0; x < img.width; x += blockSize * 0.9) {  
+            for (let x = 0; x < img.width; x += adjustedBlockSize) {
               const pixel = context.getImageData(x, y, 1, 1).data;
               context.fillStyle = `rgba(${pixel[0]}, ${pixel[1]}, ${pixel[2]}, ${pixel[3] / 255})`;
-              context.fillRect(x, y, blockSize * 0.9, blockSize);  
+              context.fillRect(x, y, adjustedBlockSize, blockSize);
             }
           }
         };
@@ -69,11 +71,13 @@ const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
       const canvas = skiaCanvasRef.current.getContext();
       const { width, height } = image;
       const pixels = image.readPixels();
-      
+
+      const adjustedBlockSize = Math.floor(width / Math.ceil(width / blockSize));
+
       if (pixels) {
         canvas.clear();  
         for (let y = 0; y < height; y += blockSize) {
-          for (let x = 0; x < width; x += blockSize * 0.9) {  
+          for (let x = 0; x < width; x += adjustedBlockSize) {
             const pixelIndex = (y * width + x) * 4;
             const r = pixels[pixelIndex];
             const g = pixels[pixelIndex + 1];
@@ -83,7 +87,7 @@ const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
             const paint = new Paint();
             paint.setColor(Skia.Color(r, g, b, a));
             canvas.drawRect(
-              Skia.Rect.MakeXYWH(x, y, blockSize * 0.9, blockSize), 
+              Skia.Rect.MakeXYWH(x, y, adjustedBlockSize, blockSize),
               paint
             );
           }
