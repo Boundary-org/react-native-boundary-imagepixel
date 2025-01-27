@@ -47,9 +47,17 @@ If you want to test it in this repository
 
 ## Test Image
 
-| Before Using Library | After Using Library |
-|:--------------------:|:-------------------:|
-| ![Before Using Library](https://github.com/user-attachments/assets/45088720-24d8-4ae0-931e-66cfcf60c86d) | ![After Using Library](https://github.com/user-attachments/assets/dd096c19-c684-4f4c-9f67-312a903cf331) |
+<table>
+  <tr>
+    <td>Before Using Library</td>
+    <td>After Using Library</td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/c9b3b189-5b3b-42a5-ad61-652d222c4eec" width="300" height="300" /></td>
+    <td><img src="https://github.com/user-attachments/assets/6cd3c724-5613-470b-8ee9-084f4d2d5d28" width="300" height="300" /></td>
+  </tr>
+</table>
+
 
 
 ## [LICENSE]([https://github.com/Boundary-org/react-native-boundary-imagepixel/blob/main/LICENSE)

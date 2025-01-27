@@ -3,14 +3,14 @@ import { View, StyleSheet, Platform, Image } from 'react-native';
 import DotImageRenderer from 'react-native-boundary-imagepixel';
 
 export default function App() {
-  const imageSource = require('./assets/test2.png'); 
+  const imageSource = require('./assets/test.jpg'); 
 
   return (
     <View style={styles.container}>
       <DotImageRenderer
         // Use 'uri' for expo web and local image path as 'require' for native environment.
         imageUri={Platform.OS === 'web' ? imageSource.uri : imageSource}
-        blockSize={10}
+        blockSize={20}
       />
     </View>
   );
