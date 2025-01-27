@@ -1,4 +1,4 @@
-## [react-native-boundary-imagepixel]([text](https://www.npmjs.com/package/react-native-boundary-imagepixel))
+## [react-native-boundary-imagepixel](https://www.npmjs.com/package/react-native-boundary-imagepixel)
 This library is an npm library that converts images from native to pixel images.
 
 ## Installation
