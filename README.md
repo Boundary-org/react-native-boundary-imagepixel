@@ -9,7 +9,7 @@ The solution is implemented in JavaScript and does not require a default module 
 ## Usage
 This library is currently available when you run it from expo web to web. The code below is an example code.
 
-```
+``` javascript
 import React from 'react';
 import { View, StyleSheet, Platform } from 'react-native';
 import DotImageRenderer from 'react-native-boundary-imagepixel';
