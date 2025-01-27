@@ -8,6 +8,7 @@ if (Platform.OS !== "web") {
 
 const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
   const [image, setImage] = useState(null);
+  const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -19,9 +20,11 @@ const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
         img.onload = () => {
           setImage(img);
           
+          setCanvasSize({ width: img.width, height: img.height });
+
           const canvas = canvasRef.current;
           if (!canvas) return;
-          
+
           const context = canvas.getContext("2d");
           canvas.width = img.width;
           canvas.height = img.height;
@@ -45,7 +48,7 @@ const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
   if (Platform.OS === "web") {
     return (
       <View style={styles.container}>
-        <canvas ref={canvasRef} style={styles.canvas} />
+        <canvas ref={canvasRef} style={{ ...styles.canvas, width: canvasSize.width, height: canvasSize.height }} />
       </View>
     );
   }
@@ -58,6 +61,8 @@ const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
         try {
           const skiaImage = await Skia.Image.fromURL(imageUri);
           setImage(skiaImage);
+          
+          setCanvasSize({ width: skiaImage.width, height: skiaImage.height });
         } catch (error) {
           console.error("Failed to load image:", error);
         }
@@ -75,7 +80,6 @@ const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
       
       if (pixels) {
         canvas.clear();  
-        
         for (let y = 0; y < height; y += blockSize) {
           for (let x = 0; x < width; x += blockSize) {
             const pixelIndex = (y * width + x) * 4;
@@ -96,7 +100,12 @@ const DotImageRenderer = ({ imageUri, blockSize = 10 }) => {
     }
   }, [skiaCanvasRef, image, blockSize]);
 
-  return <SkiaCanvas ref={skiaCanvasRef} style={styles.canvas} />;
+  return (
+    <SkiaCanvas
+      ref={skiaCanvasRef}
+      style={{ width: canvasSize.width, height: canvasSize.height }}
+    />
+  );
 };
 
 const styles = StyleSheet.create({
@@ -106,8 +115,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   canvas: {
-    width: 300,
-    height: 300,
+    width: "100%",
+    height: "100%",
   },
 });
 
