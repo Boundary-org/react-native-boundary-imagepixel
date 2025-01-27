@@ -1,4 +1,4 @@
-## React-Native-imagepixel
+## react-native-boundary-imagepixel
 This library is an npm library that converts images from native to pixel images.
 
 ## Installation
@@ -10,7 +10,7 @@ The solution is implemented in JavaScript and does not require a default module 
 ```
 import React from "react";
 import { View } from "react-native";
-import imagepixel from "react-native-imagepixel"; 
+import imagepixel from "react-native-boundary-imagepixel"; 
 
 const App = () => {
   return (
