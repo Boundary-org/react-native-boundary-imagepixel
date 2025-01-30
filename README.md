@@ -55,7 +55,7 @@ If you want to test it in this repository
   </tr>
   <tr>
     <td><img src="https://github.com/user-attachments/assets/c9b3b189-5b3b-42a5-ad61-652d222c4eec" width="300" height="300" /></td>
-    <td><img src="https://github.com/user-attachments/assets/6cd3c724-5613-470b-8ee9-084f4d2d5d28" width="300" height="300" /></td>
+    <td><img src="https://github.com/user-attachments/assets/606329c7-db57-4d2c-8734-cb1ba065bbab" width="300" height="300" /></td>
   </tr>
 </table>
 
